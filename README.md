@@ -22,7 +22,7 @@ AWS EC2 인스턴스와 JMeter를 사용하여 Spring Boot 애플리케이션의
 - **AWS 계정**
 - **EC2 인스턴스** 2개 (하나는 Spring Boot & MySQL, 하나는 JMeter 설치용)
 - **VPC** 및 **Public Subnet** 2개
-- **Java 8 이상**, **MySQL**, **Apache JMeter**
+- **Java 8**, **MySQL**, **Apache JMeter**
 
 ## ⚙️ 설정 및 구성
 
