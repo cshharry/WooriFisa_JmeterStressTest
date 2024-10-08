@@ -96,21 +96,22 @@ AWS EC2 인스턴스와 JMeter를 사용하여 Spring Boot 애플리케이션의
    - **HTTP Request**: Subnet 1의 Spring Boot 애플리케이션으로 HTTP 요청을 보냅니다.
    - **Listeners**: 테스트 결과를 수집하고 시각화하는 리스너를 추가합니다 (예: Summary Report).
 
+
 ### 3. 스트레스 테스트 실행
 1. **JMeter 테스트 실행**:
-   - JMeter CLI 또는 GUI 모드에서 Subnet 1에 있는 Spring Boot 애플리케이션에 부하를 가하는 테스트를 실행합니다.
-     - CLI 명령어 예시:
-       ```bash
-       ./jmeter -n -t test_plan.jmx -l results.jtl
-       ```
+   - JMeter **GUI 모드**에서 Subnet 1에 있는 Spring Boot 애플리케이션에 부하를 가하는 테스트를 실행합니다.
+   - **Response Time Graph**를 통해 응답 시간을 시각화합니다.
    - 테스트 중에는 애플리케이션의 응답 시간, 처리량, 에러율 등을 모니터링합니다.
 
-2. **결과 수집 및 분석**:
-   - 테스트 결과를 분석하여 애플리케이션의 성능 병목 지점을 파악하고 개선할 방안을 도출합니다.
-
 ## 📊 테스트 결과 보고
-- 테스트 결과 파일(`.jtl`)을 통해 성능 지표를 분석합니다. JMeter 내장 리포트 생성 기능을 사용하여 HTML 보고서를 생성하고, 결과를 시각화할 수 있습니다.
+- 테스트 결과 파일(`.jtl`)을 통해 성능 지표를 분석해 결과를 시각화할 수 있습니다.
 - **Throughput**, **응답 시간**, **에러율** 등 주요 성능 지표를 확인하여 최적화할 영역을 식별합니다.
+
+### AWS 환경
+![image (9)](https://github.com/user-attachments/assets/f809a406-26df-484f-ab95-f99ff50e0edc)
+### 로컬 환경
+![image](https://github.com/user-attachments/assets/2776f738-2619-4153-87cc-b2d12d6f0347)
+![image](https://github.com/user-attachments/assets/335c5659-8984-423c-b3db-0503e25038db)
 
 
 ## 🚀 EC2 기반 Java 애플리케이션 및 JMeter 부하 테스트 트러블슈팅 🔧
