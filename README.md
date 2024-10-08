@@ -4,6 +4,7 @@
 AWS EC2 인스턴스와 JMeter를 사용하여 Spring Boot 애플리케이션의 성능을 평가하는 테스트를 진행합니다. 이 테스트 환경은 **두 개의 Public Subnet**으로 구성되며, 하나의 서브넷에는 **Spring Boot 애플리케이션과 MySQL 데이터베이스**가 배포되고, 다른 서브넷에는 **JMeter**가 설치되어 부하 테스트를 실행합니다. 이러한 구성을 통해 실제 환경과 유사한 조건에서 애플리케이션의 성능을 테스트하고, 성능 병목을 발견하여 시스템 최적화를 수행할 수 있습니다.
 
 ## 🛠️ 아키텍처 설명
+![image](https://github.com/user-attachments/assets/d7ed1726-517b-4c9a-9eea-d4de8eafb646)
 
 - **VPC 및 두 개의 Public Subnet**: AWS VPC 안에 **두 개의 Public Subnet**이 존재하며, 각각 서로 다른 EC2 인스턴스가 배치되어 있습니다.
   - **Public Subnet 1**: Spring Boot 애플리케이션과 MySQL이 배포된 EC2 인스턴스가 위치합니다.
@@ -181,12 +182,6 @@ sudo swapon -s
 - **결과**: JMeter GUI 실행 및 테스트 환경 구축 완료.
 
 ---
-
-### 💡 참고 사항
-- 위의 트러블슈팅 과정은 EC2 프리 티어 환경에서 Java 애플리케이션과 JMeter를 함께 사용하는 환경에서 발생할 수 있는 문제들을 해결하는 방법을 포함하고 있습니다.
-- 각 문제의 원인과 해결 방법을 자세히 설명하여, 유사한 문제 발생 시 빠르게 대응할 수 있도록 구성하였습니다.
-
-🔗 **[GitHub Repository](https://github.com/your-repository-link)**에서 자세한 내용을 확인하세요!
 
 
 ## 📝 결론
