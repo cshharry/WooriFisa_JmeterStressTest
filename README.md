@@ -112,6 +112,82 @@ AWS EC2 인스턴스와 JMeter를 사용하여 Spring Boot 애플리케이션의
 - 테스트 결과 파일(`.jtl`)을 통해 성능 지표를 분석합니다. JMeter 내장 리포트 생성 기능을 사용하여 HTML 보고서를 생성하고, 결과를 시각화할 수 있습니다.
 - **Throughput**, **응답 시간**, **에러율** 등 주요 성능 지표를 확인하여 최적화할 영역을 식별합니다.
 
+
+## 🚀 EC2 기반 Java 애플리케이션 및 JMeter 부하 테스트 트러블슈팅 🔧
+
+### 1. Java 버전 호환성 문제 해결 🔄
+### 문제
+- JMeter는 Java 8 또는 11 버전과 호환됩니다. EC2 인스턴스에는 Java 17을 설치 해놨어서 JMeter 실행 시 호환성 문제 발생.
+
+### 해결 방법
+- 기존 Java 17 버전을 제거하고, Java 8 버전을 새로 설치하여 문제 해결.
+
+```bash
+# 기존 Java 17 제거
+sudo yum remove java-17-openjdk
+
+# Java 8 설치
+sudo yum install java-1.8.0-openjdk
+```
+- **결과**: JMeter가 정상적으로 실행되며 부하 테스트가 가능해짐.
+
+### 2. 메모리 부족 문제 해결 🧠
+### 문제
+- EC2 프리 티어 인스턴스를 사용하여 메모리가 부족한 상황 발생. JMeter는 최소 1GB 이상의 메모리가 필요하여 설치 및 실행에 어려움 발생.
+
+### 해결 방법
+- Swap 메모리를 설정하여 메모리 부족 문제 해결.
+
+```bash
+# Swap 메모리 생성 (예: 2GB)
+sudo dd if=/dev/zero of=/swapfile bs=1M count=2048
+sudo chmod 600 /swapfile
+sudo mkswap /swapfile
+sudo swapon /swapfile
+
+# Swap 메모리 설정 확인
+sudo swapon -s
+```
+- **결과**: 메모리 부족 문제 해결 및 JMeter 정상 설치 및 실행.
+
+### 3. 보안 그룹 설정 🔒
+### 문제
+- 자바 애플리케이션이 8080 포트에서 실행되지만, EC2 인스턴스의 보안 그룹에 8080 포트가 허용되지 않아 외부에서 접근 불가.
+
+### 해결 방법
+1. AWS Management Console에 접속하여 해당 EC2 인스턴스의 보안 그룹을 선택.
+2. 인바운드 규칙(Inbound Rules)에 8080 포트를 허용하는 규칙 추가.
+
+    - 유형: Custom TCP Rule
+    - 포트 범위: 8080
+    - 소스: 0.0.0.0/0 (또는 접근을 허용할 IP 범위)
+  
+- **결과**: 외부에서 8080 포트로 자바 애플리케이션에 접근 가능해짐.
+
+### 4. VS Code에서는 JMeter 실행 불가, MobaXterm에서 가능 ⚠️
+### 문제
+- `./JMeter` 명령어로 JMeter GUI를 띄우려고 했으나, VS Code의 터미널에서는 실행되지 않음.
+- 이는 EC2 인스턴스의 X11 포워딩 설정이 VS Code 환경에서는 제대로 작동하지 않기 때문으로, GUI 프로그램을 실행할 수 없음.
+
+### 해결 방법
+- MobaXterm은 X11 포워딩과 VNC 서버 기능을 기본 제공하여, GUI 프로그램을 손쉽게 실행할 수 있음.
+- MobaXterm을 사용하여 EC2 서버에 접속하고, JMeter GUI를 정상적으로 실행하여 문제 해결.
+
+```bash
+# MobaXterm 접속 후 JMeter 실행
+./JMeter
+```
+- **결과**: JMeter GUI 실행 및 테스트 환경 구축 완료.
+
+---
+
+### 💡 참고 사항
+- 위의 트러블슈팅 과정은 EC2 프리 티어 환경에서 Java 애플리케이션과 JMeter를 함께 사용하는 환경에서 발생할 수 있는 문제들을 해결하는 방법을 포함하고 있습니다.
+- 각 문제의 원인과 해결 방법을 자세히 설명하여, 유사한 문제 발생 시 빠르게 대응할 수 있도록 구성하였습니다.
+
+🔗 **[GitHub Repository](https://github.com/your-repository-link)**에서 자세한 내용을 확인하세요!
+
+
 ## 📝 결론
 **AWS EC2 인스턴스**에서 **JMeter**를 활용하여 **Spring Boot 애플리케이션**의 성능을 평가하는 스트레스 테스트를 수행했습니다.
 두 개의 **Public Subnet**을 사용한 아키텍처는 실제 운영 환경과 유사한 부하를 시뮬레이션하여 시스템 성능 병목을 파악하고 개선할 수 있었습니다.
